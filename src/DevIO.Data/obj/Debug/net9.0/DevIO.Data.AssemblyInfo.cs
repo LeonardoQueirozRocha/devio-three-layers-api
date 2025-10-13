@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DevIO.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d0249a98bbf3bb8ccb5d182b1ea9101b59f33985")]
 [assembly: System.Reflection.AssemblyProductAttribute("DevIO.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DevIO.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
