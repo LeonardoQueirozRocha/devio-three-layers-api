@@ -1,0 +1,11 @@
+/Users/leonardoqueirozrocha/Developer/DesenvolvedorIO/three-layers-api/src/DevIO.Data/bin/Debug/net9.0/DevIO.Data.deps.json
+/Users/leonardoqueirozrocha/Developer/DesenvolvedorIO/three-layers-api/src/DevIO.Data/bin/Debug/net9.0/DevIO.Data.dll
+/Users/leonardoqueirozrocha/Developer/DesenvolvedorIO/three-layers-api/src/DevIO.Data/bin/Debug/net9.0/DevIO.Data.pdb
+/Users/leonardoqueirozrocha/Developer/DesenvolvedorIO/three-layers-api/src/DevIO.Data/obj/Debug/net9.0/DevIO.Data.GeneratedMSBuildEditorConfig.editorconfig
+/Users/leonardoqueirozrocha/Developer/DesenvolvedorIO/three-layers-api/src/DevIO.Data/obj/Debug/net9.0/DevIO.Data.AssemblyInfoInputs.cache
+/Users/leonardoqueirozrocha/Developer/DesenvolvedorIO/three-layers-api/src/DevIO.Data/obj/Debug/net9.0/DevIO.Data.AssemblyInfo.cs
+/Users/leonardoqueirozrocha/Developer/DesenvolvedorIO/three-layers-api/src/DevIO.Data/obj/Debug/net9.0/DevIO.Data.csproj.CoreCompileInputs.cache
+/Users/leonardoqueirozrocha/Developer/DesenvolvedorIO/three-layers-api/src/DevIO.Data/obj/Debug/net9.0/DevIO.Data.dll
+/Users/leonardoqueirozrocha/Developer/DesenvolvedorIO/three-layers-api/src/DevIO.Data/obj/Debug/net9.0/refint/DevIO.Data.dll
+/Users/leonardoqueirozrocha/Developer/DesenvolvedorIO/three-layers-api/src/DevIO.Data/obj/Debug/net9.0/DevIO.Data.pdb
+/Users/leonardoqueirozrocha/Developer/DesenvolvedorIO/three-layers-api/src/DevIO.Data/obj/Debug/net9.0/ref/DevIO.Data.dll
