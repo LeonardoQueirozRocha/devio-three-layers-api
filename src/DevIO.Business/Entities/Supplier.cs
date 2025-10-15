@@ -14,4 +14,8 @@ public class Supplier : Entity
     public bool Active { get; set; }
 
     public Address? Address { get; set; }
+
+    public bool IsNaturalPerson => SupplierType is SupplierType.NaturalPerson;
+    
+    public bool IsLegalEntity => SupplierType is SupplierType.LegalEntity;
 }
