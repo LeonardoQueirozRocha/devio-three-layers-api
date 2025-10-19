@@ -9,18 +9,21 @@ public class SupplierValidation : AbstractValidator<Supplier>
     public SupplierValidation()
     {
         RuleFor(supplier => supplier.Name)
+            .Cascade(CascadeMode.Stop)
             .NotEmpty()
             .WithMessage(ValidationMessage.NotEmptyMessage)
             .Length(2, 100)
-            .WithMessage(ValidationMessage.LengthMinMaxMessage);
+            .WithMessage(ValidationMessage.LengthMessage);
 
         When(supplier => supplier.IsNaturalPerson, () =>
         {
             RuleFor(supplier => supplier.Document!.Length)
+                .Cascade(CascadeMode.Stop)
                 .Equal(CpfValidation.CpfSize)
                 .WithMessage(ValidationMessage.EqualMessage);
 
             RuleFor(supplier => CpfValidation.Validate(supplier.Document!))
+                .Cascade(CascadeMode.Stop)
                 .Equal(true)
                 .WithMessage(ValidationMessage.InvalidDocumentMessage);
         });
@@ -28,10 +31,12 @@ public class SupplierValidation : AbstractValidator<Supplier>
         When(supplier => supplier.IsLegalEntity, () =>
         {
             RuleFor(supplier => supplier.Document!.Length)
+                .Cascade(CascadeMode.Stop)
                 .Equal(CnpjValidation.CnpjSize)
                 .WithMessage(ValidationMessage.EqualMessage);
 
             RuleFor(supplier => CnpjValidation.Validate(supplier.Document!))
+                .Cascade(CascadeMode.Stop)
                 .Equal(true)
                 .WithMessage(ValidationMessage.InvalidDocumentMessage);
         });
