@@ -12,14 +12,14 @@ public class ProductValidation : AbstractValidator<Product>
             .NotEmpty()
             .WithMessage(ValidationMessage.NotEmptyMessage)
             .Length(2, 200)
-            .WithMessage(ValidationMessage.LengthMinMaxMessage);
+            .WithMessage(ValidationMessage.LengthMessage);
 
         RuleFor(product => product.Description)
             .Cascade(CascadeMode.Stop)
             .NotEmpty()
             .WithMessage(ValidationMessage.NotEmptyMessage)
             .Length(2, 1000)
-            .WithMessage(ValidationMessage.LengthMinMaxMessage);
+            .WithMessage(ValidationMessage.LengthMessage);
 
         RuleFor(product => product.Value)
             .Cascade(CascadeMode.Stop)

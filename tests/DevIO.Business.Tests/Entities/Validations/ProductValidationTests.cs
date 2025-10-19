@@ -45,16 +45,16 @@ public class ProductValidationTests
         result.AssertInvalid(expectedErrorCode, expectedErrorMessage);
     }
     
-    [Theory(DisplayName = $"{ClassName} {nameof(Product.Name)} should be invalid when lenght is invalid")]
+    [Theory(DisplayName = $"{ClassName} {nameof(Product.Name)} should be invalid when length is invalid")]
     [InlineData(1)]
     [InlineData(201)]
-    public void Name_ShouldBeInvalid_WhenLenghtIsInvalid(int lenght)
+    public void Name_ShouldBeInvalid_WhenLengthIsInvalid(int length)
     {
         // Arrange
         const string expectedErrorCode = "LengthValidator";
         const string expectedErrorMessage = "The Name field needs to have between 2 and 200 characters";
 
-        _product.Name = _faker.Random.AlphaNumeric(lenght);
+        _product.Name = _faker.Random.AlphaNumeric(length);
 
         // Act
         var result = _productValidation.Validate(_product);
@@ -83,16 +83,16 @@ public class ProductValidationTests
         result.AssertInvalid(expectedErrorCode, expectedErrorMessage);
     }
     
-    [Theory(DisplayName = $"{ClassName} {nameof(Product.Description)} should be invalid when lenght is invalid")]
+    [Theory(DisplayName = $"{ClassName} {nameof(Product.Description)} should be invalid when length is invalid")]
     [InlineData(1)]
     [InlineData(1001)]
-    public void Description_ShouldBeInvalid_WhenLenghtIsInvalid(int lenght)
+    public void Description_ShouldBeInvalid_WhenLengthIsInvalid(int length)
     {
         // Arrange
         const string expectedErrorCode = "LengthValidator";
         const string expectedErrorMessage = "The Description field needs to have between 2 and 1000 characters";
 
-        _product.Description = _faker.Random.AlphaNumeric(lenght);
+        _product.Description = _faker.Random.AlphaNumeric(length);
 
         // Act
         var result = _productValidation.Validate(_product);

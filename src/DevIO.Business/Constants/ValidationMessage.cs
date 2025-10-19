@@ -5,11 +5,11 @@ public static class ValidationMessage
     public const string NotEmptyMessage =
         "The {PropertyName} field needs to be informed";
 
-    public const string LengthMinMaxMessage =
+    public const string LengthMessage =
         "The {PropertyName} field needs to have between {MinLength} and {MaxLength} characters";
     
-    public const string LengthMaxMessage =
-        "The {PropertyName} needs to have {MaxLenght} characters";
+    public const string ExactLengthMessage =
+        "The {PropertyName} needs to have {MaxLength} characters";
 
     public const string EqualMessage =
         "The document field needs to have {ComparisonValue} characters and {PropertyValue} were provided";

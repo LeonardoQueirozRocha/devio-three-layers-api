@@ -12,7 +12,7 @@ public class SupplierValidation : AbstractValidator<Supplier>
             .NotEmpty()
             .WithMessage(ValidationMessage.NotEmptyMessage)
             .Length(2, 100)
-            .WithMessage(ValidationMessage.LengthMinMaxMessage);
+            .WithMessage(ValidationMessage.LengthMessage);
 
         When(supplier => supplier.IsNaturalPerson, () =>
         {
