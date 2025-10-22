@@ -1,6 +1,6 @@
 namespace DevIO.Business.Constants;
 
-public static class ValidationMessage
+public static class ValidationMessages
 {
     public const string NotEmptyMessage =
         "The {PropertyName} field needs to be informed";

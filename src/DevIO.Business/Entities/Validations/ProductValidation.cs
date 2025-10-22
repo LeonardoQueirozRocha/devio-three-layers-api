@@ -10,20 +10,20 @@ public class ProductValidation : AbstractValidator<Product>
         RuleFor(product => product.Name)
             .Cascade(CascadeMode.Stop)
             .NotEmpty()
-            .WithMessage(ValidationMessage.NotEmptyMessage)
+            .WithMessage(ValidationMessages.NotEmptyMessage)
             .Length(2, 200)
-            .WithMessage(ValidationMessage.LengthMessage);
+            .WithMessage(ValidationMessages.LengthMessage);
 
         RuleFor(product => product.Description)
             .Cascade(CascadeMode.Stop)
             .NotEmpty()
-            .WithMessage(ValidationMessage.NotEmptyMessage)
+            .WithMessage(ValidationMessages.NotEmptyMessage)
             .Length(2, 1000)
-            .WithMessage(ValidationMessage.LengthMessage);
+            .WithMessage(ValidationMessages.LengthMessage);
 
         RuleFor(product => product.Value)
             .Cascade(CascadeMode.Stop)
             .GreaterThan(decimal.Zero)
-            .WithMessage(ValidationMessage.GreaterThanMessage);
+            .WithMessage(ValidationMessages.GreaterThanMessage);
     }
 }
