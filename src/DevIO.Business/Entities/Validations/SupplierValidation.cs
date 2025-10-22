@@ -11,21 +11,21 @@ public class SupplierValidation : AbstractValidator<Supplier>
         RuleFor(supplier => supplier.Name)
             .Cascade(CascadeMode.Stop)
             .NotEmpty()
-            .WithMessage(ValidationMessage.NotEmptyMessage)
+            .WithMessage(ValidationMessages.NotEmptyMessage)
             .Length(2, 100)
-            .WithMessage(ValidationMessage.LengthMessage);
+            .WithMessage(ValidationMessages.LengthMessage);
 
         When(supplier => supplier.IsNaturalPerson, () =>
         {
             RuleFor(supplier => supplier.Document!.Length)
                 .Cascade(CascadeMode.Stop)
                 .Equal(CpfValidation.CpfSize)
-                .WithMessage(ValidationMessage.EqualMessage);
+                .WithMessage(ValidationMessages.EqualMessage);
 
             RuleFor(supplier => CpfValidation.Validate(supplier.Document!))
                 .Cascade(CascadeMode.Stop)
                 .Equal(true)
-                .WithMessage(ValidationMessage.InvalidDocumentMessage);
+                .WithMessage(ValidationMessages.InvalidDocumentMessage);
         });
         
         When(supplier => supplier.IsLegalEntity, () =>
@@ -33,12 +33,12 @@ public class SupplierValidation : AbstractValidator<Supplier>
             RuleFor(supplier => supplier.Document!.Length)
                 .Cascade(CascadeMode.Stop)
                 .Equal(CnpjValidation.CnpjSize)
-                .WithMessage(ValidationMessage.EqualMessage);
+                .WithMessage(ValidationMessages.EqualMessage);
 
             RuleFor(supplier => CnpjValidation.Validate(supplier.Document!))
                 .Cascade(CascadeMode.Stop)
                 .Equal(true)
-                .WithMessage(ValidationMessage.InvalidDocumentMessage);
+                .WithMessage(ValidationMessages.InvalidDocumentMessage);
         });
     }
 }

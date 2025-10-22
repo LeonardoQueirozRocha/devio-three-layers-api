@@ -26,5 +26,6 @@ public class SupplierBuilder : LazyFakerBuilder<Supplier>
                         ? setter.Person.Cpf(false)
                         : setter.Company.Cnpj(false))
             .RuleFor(property => property.Active, setter => setter.Random.Bool())
-            .RuleFor(property => property.Address, _ => AddressBuilder.Instance.Build());
+            .RuleFor(property => property.Address, _ => AddressBuilder.Instance.Build())
+            .RuleFor(property => property.Products, _ => ProductBuilder.Instance.BuildCollection());
 }
