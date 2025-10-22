@@ -1,6 +1,6 @@
 using DevIO.Business.Entities;
 
-namespace DevIO.Business.Interfaces;
+namespace DevIO.Business.Interfaces.Services;
 
 public interface ISupplierService : IDisposable
 {
