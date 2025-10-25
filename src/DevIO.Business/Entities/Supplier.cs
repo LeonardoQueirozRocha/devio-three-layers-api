@@ -20,4 +20,8 @@ public class Supplier : Entity
     public bool IsNaturalPerson => SupplierType is SupplierType.NaturalPerson;
 
     public bool IsLegalEntity => SupplierType is SupplierType.LegalEntity;
+
+    public bool HasProducts => Products?.Any() ?? false;
+    
+    public bool HasAddress => Address != null;
 }
