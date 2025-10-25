@@ -51,11 +51,11 @@ public class SupplierService(
 
         if (supplier is null)
         {
-            Notify(SupplierValidationMessages.SupplierDotNotExists);
+            Notify(SupplierValidationMessages.SupplierDoesNotExists);
             return;
         }
 
-        if (supplier.Products!.Any())
+        if (supplier.HasProducts)
         {
             Notify(SupplierValidationMessages.SupplierHasProducts);
             return;

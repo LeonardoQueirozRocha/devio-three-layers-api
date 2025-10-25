@@ -258,4 +258,206 @@ public class SupplierServiceTests
     }
 
     #endregion
+
+    #region RemoveAsync
+
+    [Fact(DisplayName = $"{ClassName} {nameof(SupplierService.RemoveAsync)} should remove supplier when is valid")]
+    public async Task RemoveAsync_ShouldRemoveSupplier_WhenIsValid()
+    {
+        // Arrange
+        var supplierId = Guid.NewGuid();
+
+        _supplier.Id = supplierId;
+        _supplier.Products = [];
+
+        _repositoryMock
+            .Setup(mock =>
+                mock.GetSupplierWithProductsAndAddressAsync(It.IsAny<Guid>()))
+            .Callback((Guid idCb) =>
+                idCb.Should().Be(supplierId))
+            .ReturnsAsync(_supplier);
+
+        _repositoryMock
+            .Setup(mock =>
+                mock.RemoveAddressAndSupplierAsync(It.IsAny<Address>()))
+            .Callback((Address addressCb) =>
+                addressCb.Should().BeEquivalentTo(_supplier.Address));
+
+        _repositoryMock
+            .Setup(mock =>
+                mock.RemoveAsync(It.IsAny<Guid>()))
+            .Callback((Guid idCb) =>
+                idCb.Should().Be(supplierId));
+
+        // Act
+        await _service.RemoveAsync(supplierId);
+
+        // Assert
+        _repositoryMock.Verify(
+            mock =>
+                mock.GetSupplierWithProductsAndAddressAsync(It.IsAny<Guid>()),
+            Times.Once);
+
+        _repositoryMock.Verify(
+            mock =>
+                mock.RemoveAddressAndSupplierAsync(It.IsAny<Address>()),
+            Times.Once);
+
+        _repositoryMock.Verify(
+            mock =>
+                mock.RemoveAsync(It.IsAny<Guid>()),
+            Times.Once);
+
+        _notificatorMock.Verify(
+            mock =>
+                mock.Handle(It.IsAny<Notification>()),
+            Times.Never);
+    }
+
+    [Fact(DisplayName =
+        $"{ClassName} " +
+        $"{nameof(SupplierService.RemoveAsync)}" +
+        $" should remove supplier when do not have address")]
+    public async Task RemoveAsync_ShouldRemoveSupplier_WhenDoNotHaveAddress()
+    {
+        // Arrange
+        var supplierId = Guid.NewGuid();
+
+        _supplier.Id = supplierId;
+        _supplier.Products = [];
+        _supplier.Address = null;
+
+        _repositoryMock
+            .Setup(mock =>
+                mock.GetSupplierWithProductsAndAddressAsync(It.IsAny<Guid>()))
+            .Callback((Guid idCb) =>
+                idCb.Should().Be(supplierId))
+            .ReturnsAsync(_supplier);
+
+        _repositoryMock
+            .Setup(mock =>
+                mock.RemoveAsync(It.IsAny<Guid>()))
+            .Callback((Guid idCb) =>
+                idCb.Should().Be(supplierId));
+
+        // Act
+        await _service.RemoveAsync(supplierId);
+
+        // Assert
+        _repositoryMock.Verify(
+            mock =>
+                mock.GetSupplierWithProductsAndAddressAsync(It.IsAny<Guid>()),
+            Times.Once);
+
+        _repositoryMock.Verify(
+            mock =>
+                mock.RemoveAddressAndSupplierAsync(It.IsAny<Address>()),
+            Times.Never);
+
+        _repositoryMock.Verify(
+            mock =>
+                mock.RemoveAsync(It.IsAny<Guid>()),
+            Times.Once);
+
+        _notificatorMock.Verify(
+            mock =>
+                mock.Handle(It.IsAny<Notification>()),
+            Times.Never);
+    }
+
+    [Fact(DisplayName =
+        $"{ClassName} " +
+        $"{nameof(SupplierService.RemoveAsync)}" +
+        $" should add notification when supplier does not exists")]
+    public async Task RemoveAsync_ShouldAddNotification_WhenSupplierDoesNotExists()
+    {
+        // Arrange
+        var supplierId = Guid.NewGuid();
+
+        _repositoryMock
+            .Setup(mock =>
+                mock.GetSupplierWithProductsAndAddressAsync(It.IsAny<Guid>()))
+            .Callback((Guid idCb) =>
+                idCb.Should().Be(supplierId));
+
+        _notificatorMock
+            .Setup(mock =>
+                mock.Handle(It.IsAny<Notification>()))
+            .Callback((Notification notificationCb) =>
+                notificationCb.Message.Should().BeEquivalentTo(SupplierValidationMessages.SupplierDoesNotExists));
+
+        // Act
+        await _service.RemoveAsync(supplierId);
+
+        // Assert
+        _repositoryMock.Verify(
+            mock =>
+                mock.GetSupplierWithProductsAndAddressAsync(It.IsAny<Guid>()),
+            Times.Once);
+
+        _repositoryMock.Verify(
+            mock =>
+                mock.RemoveAddressAndSupplierAsync(It.IsAny<Address>()),
+            Times.Never);
+
+        _repositoryMock.Verify(
+            mock =>
+                mock.RemoveAsync(It.IsAny<Guid>()),
+            Times.Never);
+
+        _notificatorMock.Verify(
+            mock =>
+                mock.Handle(It.IsAny<Notification>()),
+            Times.Once);
+    }
+
+    [Fact(DisplayName =
+        $"{ClassName} " +
+        $"{nameof(SupplierService.RemoveAsync)}" +
+        $" should add notification when supplier has products")]
+    public async Task RemoveAsync_ShouldAddNotification_WhenSupplierHasProducts()
+    {
+        // Arrange
+        var supplierId = Guid.NewGuid();
+        _supplier.Id = supplierId;
+
+        _repositoryMock
+            .Setup(mock =>
+                mock.GetSupplierWithProductsAndAddressAsync(It.IsAny<Guid>()))
+            .Callback((Guid idCb) =>
+                idCb.Should().Be(supplierId))
+            .ReturnsAsync(_supplier);
+
+        _notificatorMock
+            .Setup(mock =>
+                mock.Handle(It.IsAny<Notification>()))
+            .Callback((Notification notificationCb) =>
+                notificationCb.Message.Should().BeEquivalentTo(SupplierValidationMessages.SupplierHasProducts));
+
+        // Act
+        await _service.RemoveAsync(supplierId);
+
+        // Assert
+        _repositoryMock.Verify(
+            mock =>
+                mock.GetSupplierWithProductsAndAddressAsync(It.IsAny<Guid>()),
+            Times.Once);
+
+        _repositoryMock.Verify(
+            mock =>
+                mock.RemoveAddressAndSupplierAsync(It.IsAny<Address>()),
+            Times.Never);
+
+        _repositoryMock.Verify(
+            mock =>
+                mock.RemoveAsync(It.IsAny<Guid>()),
+            Times.Never);
+
+        _notificatorMock.Verify(
+            mock =>
+                mock.Handle(It.IsAny<Notification>()),
+            Times.Once);
+    }
+
+    #endregion
 }
