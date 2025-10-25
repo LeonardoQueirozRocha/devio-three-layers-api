@@ -190,4 +190,21 @@ public class ProductServiceTests
     }
 
     #endregion
+
+    #region Disponse
+
+    [Fact(DisplayName = $"{ClassName} {nameof(ProductService.Dispose)} should dispose repository")]
+    public void Dispose_ShouldDisposeRepository()
+    {
+        // Arrange && Act
+        _service.Dispose();
+
+        // Assert
+        _repositoryMock.Verify(
+            mock =>
+                mock.Dispose(),
+            Times.Once);
+    }
+
+    #endregion
 }
