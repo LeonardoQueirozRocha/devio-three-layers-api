@@ -22,4 +22,6 @@ public class Supplier : Entity
     public bool IsLegalEntity => SupplierType is SupplierType.LegalEntity;
 
     public bool HasProducts => Products?.Any() ?? false;
+    
+    public bool HasAddress => Address != null;
 }

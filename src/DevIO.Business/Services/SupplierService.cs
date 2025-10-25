@@ -47,23 +47,23 @@ public class SupplierService(
 
     public async Task RemoveAsync(Guid id)
     {
-        var supplier = await repository.GetSupplierWithProductsAndAddressAsync(id);
+        var tuple = await GetSupplierWithProductsAndAddressAsync(id);
 
-        if (supplier is null)
+        if (!tuple.SupplierFound)
         {
             Notify(SupplierValidationMessages.SupplierDoesNotExists);
             return;
         }
 
-        if (supplier.HasProducts)
+        if (tuple.Supplier!.HasProducts)
         {
             Notify(SupplierValidationMessages.SupplierHasProducts);
             return;
         }
 
-        if (supplier.Address is not null)
+        if (tuple.Supplier.HasAddress)
         {
-            await repository.RemoveAddressAndSupplierAsync(supplier.Address);
+            await repository.RemoveAddressAndSupplierAsync(tuple.Supplier.Address!);
         }
 
         await repository.RemoveAsync(id);
@@ -95,6 +95,13 @@ public class SupplierService(
         var suppliers = await repository.FindAsync(s => s.Document == document && s.Id != id);
 
         return suppliers.Any();
+    }
+
+    private async Task<(bool SupplierFound, Supplier? Supplier)> GetSupplierWithProductsAndAddressAsync(Guid id)
+    {
+        var supplier = await repository.GetSupplierWithProductsAndAddressAsync(id);
+
+        return (supplier != null, supplier);
     }
 
     #endregion

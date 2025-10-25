@@ -114,4 +114,28 @@ public class SupplierTests
     }
 
     #endregion
+
+    #region HasAddress
+
+    [Fact(DisplayName = $"{ClassName} {nameof(Supplier.HasAddress)} should be true")]
+    public void HasAddress_ShouldBeTrue()
+    {
+        // Arrange && Act && Assert
+        _supplier.HasAddress.Should().BeTrue();
+    }
+
+    [Fact(DisplayName = $"{ClassName} {nameof(Supplier.HasAddress)} should be false")]
+    public void HasAddress_ShouldBeFalse()
+    {
+        // Arrange
+        _supplier.Address = null;
+
+        // Act
+        var result = _supplier.HasAddress;
+
+        // Assert
+        result.Should().BeFalse();
+    }
+
+    #endregion
 }
