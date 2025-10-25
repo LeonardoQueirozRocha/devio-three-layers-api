@@ -147,4 +147,115 @@ public class SupplierServiceTests
     }
 
     #endregion
+
+    #region UpdateAsync
+
+    [Fact(DisplayName = $"{ClassName} {nameof(SupplierService.UpdateAsync)} should update supplier when is valid")]
+    public async Task UpdateAsync_ShouldUpdateSupplier_WhenIsValid()
+    {
+        // Arrange
+        _repositoryMock
+            .Setup(mock =>
+                mock.UpdateAsync(It.IsAny<Supplier>()))
+            .Callback((Supplier supplierCb) =>
+                supplierCb.Should().BeEquivalentTo(_supplier));
+
+        // Act
+        await _service.UpdateAsync(_supplier);
+
+        // Assert
+        _repositoryMock.Verify(
+            mock =>
+                mock.UpdateAsync(It.IsAny<Supplier>()),
+            Times.Once);
+
+        _notificatorMock.Verify(
+            mock =>
+                mock.Handle(It.IsAny<Notification>()),
+            Times.Never);
+    }
+
+    [Fact(DisplayName =
+        $"{ClassName}" +
+        $" {nameof(SupplierService.UpdateAsync)}" +
+        $" should not update supplier when is invalid")]
+    public async Task UpdateAsync_ShouldNotUpdateSupplier_WhenIsInvalid()
+    {
+        // Arrange
+        string[] expectedNotifications =
+        [
+            "The Name field needs to be informed",
+            "The document field needs to have 11 characters and 0 were provided",
+            "The informed document is invalid"
+        ];
+
+        _supplier.Name = string.Empty;
+        _supplier.SupplierType = SupplierType.NaturalPerson;
+        _supplier.Document = string.Empty;
+
+        _notificatorMock
+            .Setup(mock =>
+                mock.Handle(It.IsAny<Notification>()))
+            .Callback((Notification notificationCb) =>
+                expectedNotifications.Should().Contain(notificationCb.Message));
+
+        // Act
+        await _service.UpdateAsync(_supplier);
+
+        // Assert
+        _repositoryMock.Verify(
+            mock =>
+                mock.UpdateAsync(It.IsAny<Supplier>()),
+            Times.Never);
+
+        _notificatorMock.Verify(
+            mock =>
+                mock.Handle(It.IsAny<Notification>()),
+            Times.Exactly(expectedNotifications.Length));
+    }
+
+    [Fact(DisplayName =
+        $"{ClassName}" +
+        $" {nameof(SupplierService.UpdateAsync)}" +
+        $" should add notification when supplier already exists")]
+    public async Task UpdateAsync_ShouldAddNotification_WhenSupplierAlreadyExists()
+    {
+        // Arrange
+        var existingSupplier = SupplierBuilder.Instance.Build();
+        existingSupplier.Document = _supplier.Document;
+
+        _repositoryMock
+            .Setup(mock =>
+                mock.FindAsync(It.IsAny<Expression<Func<Supplier, bool>>>()))
+            .Callback((Expression<Func<Supplier, bool>> predicateCb) =>
+                predicateCb.Compile().Invoke(existingSupplier).Should().BeTrue())
+            .ReturnsAsync([existingSupplier]);
+
+        _notificatorMock
+            .Setup(mock =>
+                mock.Handle(It.IsAny<Notification>()))
+            .Callback((Notification notificationCb) =>
+                notificationCb.Message.Should().Be(SupplierValidationMessages.SupplierAlreadyExists));
+
+        // Act
+        await _service.UpdateAsync(_supplier);
+
+        // Assert
+        _repositoryMock.Verify(
+            mock =>
+                mock.AddAsync(It.IsAny<Supplier>()),
+            Times.Never);
+
+        _repositoryMock.Verify(
+            mock =>
+                mock.FindAsync(It.IsAny<Expression<Func<Supplier, bool>>>()),
+            Times.Once);
+
+        _notificatorMock.Verify(
+            mock =>
+                mock.Handle(It.IsAny<Notification>()),
+            Times.Once);
+    }
+
+    #endregion
 }
