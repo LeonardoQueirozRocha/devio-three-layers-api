@@ -9,7 +9,7 @@ using DevIO.Business.Services.Base;
 namespace DevIO.Business.Services;
 
 public class SupplierService(
-    ISupplierRepository supplierRepository,
+    ISupplierRepository repository,
     INotificator notificator)
     : BaseService(notificator), ISupplierService
 {
@@ -26,7 +26,7 @@ public class SupplierService(
             return;
         }
 
-        await supplierRepository.AddAsync(supplier);
+        await repository.AddAsync(supplier);
     }
 
     public async Task UpdateAsync(Supplier supplier)
@@ -42,12 +42,12 @@ public class SupplierService(
             return;
         }
 
-        await supplierRepository.UpdateAsync(supplier);
+        await repository.UpdateAsync(supplier);
     }
 
     public async Task RemoveAsync(Guid id)
     {
-        var supplier = await supplierRepository.GetSupplierWithProductsAndAddressAsync(id);
+        var supplier = await repository.GetSupplierWithProductsAndAddressAsync(id);
 
         if (supplier is null)
         {
@@ -63,14 +63,14 @@ public class SupplierService(
 
         if (supplier.Address is not null)
         {
-            await supplierRepository.RemoveAddressAndSupplierAsync(supplier.Address);
+            await repository.RemoveAddressAndSupplierAsync(supplier.Address);
         }
 
-        await supplierRepository.RemoveAsync(id);
+        await repository.RemoveAsync(id);
     }
 
     public void Dispose() =>
-        supplierRepository?.Dispose();
+        repository?.Dispose();
 
     #region Private Methods
 
@@ -81,18 +81,18 @@ public class SupplierService(
         Validate(new AddressValidation(), address!);
 
     private bool IsSupplierAndAddressValid(Supplier supplier) =>
-        IsSupplierValid(supplier) && IsAddressValid(supplier.Address);
+        IsSupplierValid(supplier) || IsAddressValid(supplier.Address);
 
     private async Task<bool> SupplierAlreadyExistsAsync(string? document)
     {
-        var suppliers = await supplierRepository.FindAsync(s => s.Document == document);
+        var suppliers = await repository.FindAsync(supplier => supplier.Document == document);
 
         return suppliers.Any();
     }
 
     private async Task<bool> SupplierAlreadyExistsAsync(string? document, Guid id)
     {
-        var suppliers = await supplierRepository.FindAsync(s => s.Document == document && s.Id != id);
+        var suppliers = await repository.FindAsync(s => s.Document == document && s.Id != id);
 
         return suppliers.Any();
     }
