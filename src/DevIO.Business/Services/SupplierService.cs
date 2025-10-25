@@ -1,13 +1,17 @@
 using DevIO.Business.Constants;
 using DevIO.Business.Entities;
 using DevIO.Business.Entities.Validations;
+using DevIO.Business.Interfaces;
 using DevIO.Business.Interfaces.Repositories;
 using DevIO.Business.Interfaces.Services;
 using DevIO.Business.Services.Base;
 
 namespace DevIO.Business.Services;
 
-public class SupplierService(ISupplierRepository supplierRepository) : BaseService, ISupplierService
+public class SupplierService(
+    ISupplierRepository supplierRepository,
+    INotificator notificator)
+    : BaseService(notificator), ISupplierService
 {
     public async Task AddAsync(Supplier supplier)
     {

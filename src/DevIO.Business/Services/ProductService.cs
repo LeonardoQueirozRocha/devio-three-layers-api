@@ -1,12 +1,16 @@
 using DevIO.Business.Entities;
 using DevIO.Business.Entities.Validations;
+using DevIO.Business.Interfaces;
 using DevIO.Business.Interfaces.Repositories;
 using DevIO.Business.Interfaces.Services;
 using DevIO.Business.Services.Base;
 
 namespace DevIO.Business.Services;
 
-public class ProductService(IProductRepository productRepository) : BaseService, IProductService
+public class ProductService(
+    IProductRepository productRepository,
+    INotificator notificator)
+    : BaseService(notificator), IProductService
 {
     public async Task AddAsync(Product product)
     {
