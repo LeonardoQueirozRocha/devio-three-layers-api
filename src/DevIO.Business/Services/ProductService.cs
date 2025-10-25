@@ -8,7 +8,7 @@ using DevIO.Business.Services.Base;
 namespace DevIO.Business.Services;
 
 public class ProductService(
-    IProductRepository productRepository,
+    IProductRepository repository,
     INotificator notificator)
     : BaseService(notificator), IProductService
 {
@@ -19,7 +19,7 @@ public class ProductService(
             return;
         }
 
-        await productRepository.AddAsync(product);
+        await repository.AddAsync(product);
     }
 
     public async Task UpdateAsync(Product product)
@@ -29,16 +29,16 @@ public class ProductService(
             return;
         }
 
-        await productRepository.UpdateAsync(product);
+        await repository.UpdateAsync(product);
     }
 
     public async Task RemoveAsync(Guid id)
     {
-        await productRepository.RemoveAsync(id);
+        await repository.RemoveAsync(id);
     }
 
     public void Dispose() =>
-        productRepository?.Dispose();
+        repository?.Dispose();
 
     #region Private Methods
 
