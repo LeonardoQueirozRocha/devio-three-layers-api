@@ -460,4 +460,21 @@ public class SupplierServiceTests
     }
 
     #endregion
+
+    #region Disponse
+
+    [Fact(DisplayName = $"{ClassName} {nameof(SupplierService.Dispose)} should dispose repository")]
+    public void Dispose_ShouldDisposeRepository()
+    {
+        // Arrange && Act
+        _service.Dispose();
+
+        // Assert
+        _repositoryMock.Verify(
+            mock =>
+                mock.Dispose(),
+            Times.Once);
+    }
+
+    #endregion
 }
