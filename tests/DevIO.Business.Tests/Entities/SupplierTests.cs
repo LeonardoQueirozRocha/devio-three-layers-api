@@ -74,4 +74,44 @@ public class SupplierTests
     }
 
     #endregion
+
+    #region HasProducts
+
+    [Fact(DisplayName = $"{ClassName} {nameof(Supplier.HasProducts)} should be true")]
+    public void HasProducts_ShouldBeTrue()
+    {
+        // Arrange && Act
+        var result = _supplier.HasProducts;
+
+        // Assert
+        result.Should().BeTrue();
+    }
+
+    [Fact(DisplayName = $"{ClassName} {nameof(Supplier.HasProducts)} should be false when products is null")]
+    public void HasProducts_ShouldBeFalse_WhenProductsIsNull()
+    {
+        // Arrange
+        _supplier.Products = null;
+
+        // Act
+        var result = _supplier.HasProducts;
+
+        // Assert
+        result.Should().BeFalse();
+    }
+
+    [Fact(DisplayName = $"{ClassName} {nameof(Supplier.HasProducts)} should be false when products are empty")]
+    public void HasProducts_ShouldBeFalse_WhenProductsAreEmpty()
+    {
+        // Arrange
+        _supplier.Products = [];
+
+        // Act
+        var result = _supplier.HasProducts;
+
+        // Assert
+        result.Should().BeFalse();
+    }
+
+    #endregion
 }
