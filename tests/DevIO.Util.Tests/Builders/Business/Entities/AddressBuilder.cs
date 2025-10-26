@@ -21,6 +21,5 @@ public class AddressBuilder : LazyFakerBuilder<Address>
             .RuleFor(property => property.ZipCode, setter => setter.Address.ZipCode("########"))
             .RuleFor(property => property.Neighborhood, setter => setter.Address.StreetAddress())
             .RuleFor(property => property.City, setter => setter.Address.City())
-            .RuleFor(property => property.State, setter => setter.Address.State())
-            .RuleFor(property => property.Supplier, _ => SupplierBuilder.Instance.Build());
+            .RuleFor(property => property.State, setter => setter.Address.State());
 }

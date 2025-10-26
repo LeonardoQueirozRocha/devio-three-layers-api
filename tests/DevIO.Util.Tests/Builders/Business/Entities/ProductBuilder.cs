@@ -14,11 +14,10 @@ public class ProductBuilder : LazyFakerBuilder<Product>
 
     protected override Faker<Product> Factory() =>
         new Faker<Product>(Locale)
+            .RuleFor(property => property.SupplierId, setter => setter.Random.Guid())
             .RuleFor(property => property.Name, setter => setter.Commerce.ProductName())
             .RuleFor(property => property.Description, setter => setter.Commerce.ProductDescription())
             .RuleFor(property => property.Value, setter => decimal.Parse(setter.Commerce.Price()))
             .RuleFor(property => property.RegistrationDate, setter => setter.Date.Recent())
-            .RuleFor(property => property.Active, setter => setter.Random.Bool())
-            .RuleFor(property => property.Supplier, _ => SupplierBuilder.Instance.Build())
-            .RuleFor(property => property.SupplierId, (_, current) => current.Supplier!.Id);
+            .RuleFor(property => property.Active, setter => setter.Random.Bool());
 }
