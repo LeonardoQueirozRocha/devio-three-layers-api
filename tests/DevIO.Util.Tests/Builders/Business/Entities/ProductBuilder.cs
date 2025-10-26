@@ -18,5 +18,7 @@ public class ProductBuilder : LazyFakerBuilder<Product>
             .RuleFor(property => property.Description, setter => setter.Commerce.ProductDescription())
             .RuleFor(property => property.Value, setter => decimal.Parse(setter.Commerce.Price()))
             .RuleFor(property => property.RegistrationDate, setter => setter.Date.Recent())
-            .RuleFor(property => property.Active, setter => setter.Random.Bool());
+            .RuleFor(property => property.Active, setter => setter.Random.Bool())
+            .RuleFor(property => property.Supplier, _ => SupplierBuilder.Instance.Build())
+            .RuleFor(property => property.SupplierId, (_, current) => current.Supplier!.Id);
 }
