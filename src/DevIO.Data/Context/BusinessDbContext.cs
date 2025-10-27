@@ -3,11 +3,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DevIO.Data.Context;
 
-public class BusinessDbContext : DbContext
+public sealed class BusinessDbContext : DbContext
 {
     public BusinessDbContext(DbContextOptions<BusinessDbContext> options) : base(options)
     {
-        // TODO: Another configs
+        ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        ChangeTracker.AutoDetectChangesEnabled = false;
     }
 
     public DbSet<Product> Products { get; set; }
@@ -22,10 +23,9 @@ public class BusinessDbContext : DbContext
 
         var unmappedStringProperties = modelBuilder.Model
             .GetEntityTypes()
-            .SelectMany(entityType =>
-                entityType
-                    .GetProperties()
-                    .Where(property => property.ClrType == typeof(string)));
+            .SelectMany(entityType => entityType
+                .GetProperties()
+                .Where(property => property.ClrType == typeof(string)));
 
         foreach (var unmappedStringProperty in unmappedStringProperties)
         {
@@ -42,5 +42,31 @@ public class BusinessDbContext : DbContext
         }
 
         base.OnModelCreating(modelBuilder);
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        const string registrationDatePropertyName = "RegistrationDate";
+
+        var entries = ChangeTracker
+            .Entries()
+            .Where(entry => entry
+                .GetType()
+                .GetProperty(registrationDatePropertyName) is not null);
+
+        foreach (var entry in entries)
+        {
+            if (entry.State is EntityState.Added)
+            {
+                entry.Property(registrationDatePropertyName).CurrentValue = DateTime.Now;
+            }
+
+            if (entry.State is EntityState.Modified)
+            {
+                entry.Property(registrationDatePropertyName).IsModified = false;
+            }
+        }
+
+        return base.SaveChangesAsync(cancellationToken);
     }
 }
