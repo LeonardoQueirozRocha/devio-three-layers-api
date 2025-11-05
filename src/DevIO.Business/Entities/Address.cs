@@ -4,6 +4,8 @@ namespace DevIO.Business.Entities;
 
 public class Address : Entity
 {
+    public Guid SupplierId { get; set; }
+    
     public string? Street { get; set; }
 
     public string? Number { get; set; }

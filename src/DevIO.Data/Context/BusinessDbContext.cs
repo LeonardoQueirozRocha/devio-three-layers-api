@@ -20,22 +20,22 @@ public sealed class BusinessDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(BusinessDbContext).Assembly);
-
+        
         var unmappedStringProperties = modelBuilder.Model
             .GetEntityTypes()
             .SelectMany(entityType => entityType
                 .GetProperties()
                 .Where(property => property.ClrType == typeof(string)));
-
+        
         foreach (var unmappedStringProperty in unmappedStringProperties)
         {
             unmappedStringProperty.SetColumnType("VARCHAR(100)");
         }
-
+        
         var relationships = modelBuilder.Model
             .GetEntityTypes()
             .SelectMany(entityType => entityType.GetForeignKeys());
-
+        
         foreach (var relationship in relationships)
         {
             relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
