@@ -4,17 +4,17 @@ using DevIO.Business.Interfaces.Repositories.Base;
 using DevIO.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace DevIO.Data.Repositories;
+namespace DevIO.Data.Repositories.Base;
 
 public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity, new()
 {
-    protected readonly BusinessDbContext Db;
+    protected readonly BusinessDbContext DbContext;
     protected readonly DbSet<TEntity> DbSet;
 
-    protected Repository(BusinessDbContext db)
+    protected Repository(BusinessDbContext dbContext)
     {
-        Db = db;
-        DbSet = db.Set<TEntity>();
+        DbContext = dbContext;
+        DbSet = DbContext.Set<TEntity>();
     }
 
     public virtual async Task<List<TEntity>> GetAllAsync()
@@ -58,11 +58,11 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
 
     public async Task<int> SaveChangesAsync()
     {
-        return await Db.SaveChangesAsync();
+        return await DbContext.SaveChangesAsync();
     }
 
     public void Dispose()
     {
-        Db.Dispose();
+        DbContext.Dispose();
     }
 }
