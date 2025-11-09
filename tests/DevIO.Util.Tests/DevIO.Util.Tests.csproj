@@ -9,10 +9,12 @@
     <ItemGroup>
       <PackageReference Include="Bogus" Version="35.6.4" />
       <PackageReference Include="FluentAssertions" Version="8.7.1" />
+      <PackageReference Include="xunit.extensibility.core" Version="2.9.2" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\DevIO.Business\DevIO.Business.csproj" />
+      <ProjectReference Include="..\..\src\DevIO.Data\DevIO.Data.csproj" />
     </ItemGroup>
 
 </Project>
