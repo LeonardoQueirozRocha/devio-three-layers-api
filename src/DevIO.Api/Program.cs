@@ -1,3 +1,4 @@
+using DevIO.Api;
 using DevIO.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,7 +42,10 @@ app.MapGet("/weatherforecast", () =>
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+namespace DevIO.Api
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+    {
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
 }

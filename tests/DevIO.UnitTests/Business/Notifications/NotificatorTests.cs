@@ -1,7 +1,7 @@
 using DevIO.Business.Notifications;
 using FluentAssertions;
 
-namespace DevIO.Business.Tests.Notifications;
+namespace DevIO.UnitTests.Business.Notifications;
 
 public class NotificatorTests
 {

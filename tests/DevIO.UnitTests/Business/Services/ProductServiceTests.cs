@@ -7,7 +7,7 @@ using DevIO.Util.Tests.Builders.Business.Entities;
 using FluentAssertions;
 using Moq;
 
-namespace DevIO.Business.Tests.Services;
+namespace DevIO.UnitTests.Business.Services;
 
 public class ProductServiceTests
 {

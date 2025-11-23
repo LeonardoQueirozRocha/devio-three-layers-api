@@ -4,9 +4,8 @@ using DevIO.Business.Entities.Validations;
 using DevIO.Business.Enums;
 using DevIO.Util.Tests.Builders.Business.Entities;
 using DevIO.Util.Tests.Extensions;
-using FluentAssertions;
 
-namespace DevIO.Business.Tests.Entities.Validations;
+namespace DevIO.UnitTests.Business.Entities.Validations;
 
 public class SupplierValidationTests
 {
