@@ -25,4 +25,8 @@
       <ProjectReference Include="..\DevIO.Util.Tests\DevIO.Util.Tests.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Business\" />
+    </ItemGroup>
+
 </Project>

@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.Business", "src\DevIO
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5C3B44AF-A0F2-4F13-A2A4-ED2FD00DF56E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.Business.Tests", "tests\DevIO.Business.Tests\DevIO.Business.Tests.csproj", "{C29C4478-FF6E-4ED6-A4C5-ECCF18AD4E3C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.UnitTests", "tests\DevIO.UnitTests\DevIO.UnitTests.csproj", "{C29C4478-FF6E-4ED6-A4C5-ECCF18AD4E3C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevIO.Util.Tests", "tests\DevIO.Util.Tests\DevIO.Util.Tests.csproj", "{8CC393BA-0E71-4AF9-B962-A11DFA1A8869}"
 EndProject

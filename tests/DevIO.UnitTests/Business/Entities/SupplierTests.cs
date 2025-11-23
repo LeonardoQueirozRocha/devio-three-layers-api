@@ -3,7 +3,7 @@ using DevIO.Business.Enums;
 using DevIO.Util.Tests.Builders.Business.Entities;
 using FluentAssertions;
 
-namespace DevIO.Business.Tests.Entities;
+namespace DevIO.UnitTests.Business.Entities;
 
 public class SupplierTests
 {
